@@ -1,0 +1,63 @@
+extends layout
+
+block content
+  section.hero.is-primary
+    .hero-body
+      .container
+        h1.title.has-text-centered
+          | What's the weather like?
+  section.section
+    .container
+      .columns.is-centered
+        .column.is-half
+          form(method="POST")
+            .field.has-addons
+              .control.is-expanded
+                input.input.is-primary.is-large(id="search-box" type="text" name="city" data-city-search='' placeholder="Enter a city..." required="")
+              .control
+                button.button.is-primary.is-large(type='submit') Search
+  section.section
+    h2.title.has-text-centered Current Weather
+    .container
+      .columns.is-centered
+        .box.has-background-primary
+          article.media
+            .media-left
+              figure.image.is-50x50
+              img(src= image, alt='Weather Image')
+            .media-content
+              .content
+                p.title.has-text-black #{cityName}
+                p.subtitle.is-4.has-text-black #{weatherTemperature}&#176C
+                p.subtitle.has-text-black #{weatherDescription}
+                p.subtitle.is-4.has-text-black #{airReading}
+      .columns.is-centered
+        img(src="/images/AQI-Scale.jpg" width="40%" alt="Air Quality Index")
+
+  section.section
+    h3.title.has-text-centered Weather Forecast for the next 8 days (including today)
+    .columns
+      each day in weekly
+        .column
+          .box.has-background-primary
+            .media-content
+              .content
+                p.subtitle.has-text-black= day.summary
+                p.subtitle.has-text-white= day.temperatureMin
+                p.subtitle.has-text-white= day.temperatureMax
+  section.section
+    h2.title.has-text-centered Your Location
+    .columns.is-centered
+      #mapid
+
+  script.
+    let map = L.map("mapid").setView([#{lat}, #{lon}], 8)
+    L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: "mapbox.streets",
+      accessToken: "pk.eyJ1IjoiYmlnYm9zczQyMCIsImEiOiJjazA2eGZtaWs0NW0xM2NtbGM0ZzV0bDF0In0.CwlgmGphgSJ9sX_FZ7Ra3A"
+    }).addTo(map);
+    let marker = L.marker([#{lat}, #{lon}]).addTo(map);
+    marker.bindPopup("#{weather}").openPopup();
+
