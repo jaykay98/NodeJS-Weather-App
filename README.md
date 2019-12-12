@@ -1,6 +1,8 @@
 # NodeJS-Weather-App
 Displays weather information and location of a city
 
+Live demo at: https://nodejs-weather-mashup.herokuapp.com/
+
 ## Build Setup
 
 ``` bash
