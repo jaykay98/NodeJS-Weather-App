@@ -28,11 +28,9 @@ block content
             .media-content
               .content
                 p.title.has-text-black #{cityName}
-                p.subtitle.is-4.has-text-black #{weatherTemperature}&#176C
+                p.subtitle.is-4.has-text-black #{weatherTemperature}
                 p.subtitle.has-text-black #{weatherDescription}
                 p.subtitle.is-4.has-text-black #{airReading}
-      .columns.is-centered
-        img(src="/images/AQI-Scale.jpg" width="40%" alt="Air Quality Index")
 
   section.section
     h3.title.has-text-centered Weather Forecast for the next 8 days (including today)
@@ -52,11 +50,13 @@ block content
 
   script.
     let map = L.map("mapid").setView([#{lat}, #{lon}], 8)
-    L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+      attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+      tileSize: 512,
       maxZoom: 18,
-      id: "mapbox.streets",
-      accessToken: "pk.eyJ1IjoiYmlnYm9zczQyMCIsImEiOiJjazA2eGZtaWs0NW0xM2NtbGM0ZzV0bDF0In0.CwlgmGphgSJ9sX_FZ7Ra3A"
+      zoomOffset: -1,
+      id: "mapbox/streets-v11",
+      accessToken: "pk.eyJ1IjoiYmlnYm9zczQyMCIsImEiOiJjbDVhb3psOHExMDFoM2NvamZmZW43OWU3In0.oPBstTx59mWleTB-5b1Odw"
     }).addTo(map);
     let marker = L.marker([#{lat}, #{lon}]).addTo(map);
     marker.bindPopup("#{weather}").openPopup();
