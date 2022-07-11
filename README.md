@@ -9,9 +9,7 @@ Live demo at: https://nodejs-weather-mashup.herokuapp.com/
 # install dependencies
 $ npm install
 
-## Get API keys from Dark Sky: https://darksky.net/dev and OpenWeatherAPI: https://openweathermap.org/.
-
-## Create a .env file with 2 variables called WEATHER_API_KEY and DARKSKY_KEY and paste the API keys in there.
+## Get API keys from https://openweathermap.org/ and https://www.mapbox.com/.
 
 # Running the application
 $ npm start
