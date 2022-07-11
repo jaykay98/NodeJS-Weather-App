@@ -20,29 +20,17 @@ block content
     h2.title.has-text-centered Current Weather
     .container
       .columns.is-centered
-        .box.has-background-primary
-          article.media
-            .media-left
-              figure.image.is-50x50
-              img(src= image, alt='Weather Image')
-            .media-content
-              .content
-                p.title.has-text-black #{cityName}
-                p.subtitle.is-4.has-text-black #{weatherTemperature}
-                p.subtitle.has-text-black #{weatherDescription}
-                p.subtitle.is-4.has-text-black #{airReading}
-
-  section.section
-    h3.title.has-text-centered Weather Forecast for the next 8 days (including today)
-    .columns
-      each day in weekly
-        .column
+        if image
           .box.has-background-primary
-            .media-content
-              .content
-                p.subtitle.has-text-black= day.summary
-                p.subtitle.has-text-white= day.temperatureMin
-                p.subtitle.has-text-white= day.temperatureMax
+            article.media
+              .media-left
+                figure.image.is-50x50
+                img(src= image, alt='Weather Image')
+              .media-content
+                .content
+                  p.title.has-text-black #{cityName}
+                  p.subtitle.is-4.has-text-black #{weatherConditions}
+                  p.subtitle.has-text-black #{temperature}
   section.section
     h2.title.has-text-centered Your Location
     .columns.is-centered
@@ -56,8 +44,8 @@ block content
       maxZoom: 18,
       zoomOffset: -1,
       id: "mapbox/streets-v11",
-      accessToken: "pk.eyJ1IjoiYmlnYm9zczQyMCIsImEiOiJjbDVhb3psOHExMDFoM2NvamZmZW43OWU3In0.oPBstTx59mWleTB-5b1Odw"
+      accessToken: '#{MAPBOX_ACCESS_TOKEN}'
     }).addTo(map);
     let marker = L.marker([#{lat}, #{lon}]).addTo(map);
-    marker.bindPopup("#{weather}").openPopup();
+    marker.bindPopup("#{markerDescription}").openPopup();
 
