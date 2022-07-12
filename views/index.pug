@@ -23,9 +23,9 @@ block content
         if image
           .box.has-background-primary
             article.media
-              .media-left
-                figure.image.is-50x50
-                img(src= image, alt='Weather Image')
+              figure.media-left
+                div.is-64x64
+                i(class=`fa-2xl fa-solid ${image}`)
               .media-content
                 .content
                   p.title.has-text-black #{cityName}

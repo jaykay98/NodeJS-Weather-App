@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const { displayWeatherIcon } = require('../utility/displayIcons');
 
 const { MAPBOX_ACCESS_TOKEN } = process.env;
 
@@ -30,14 +31,14 @@ router.post('/', async (req, res) => {
       const { name } = results.data;
       const { lat, lon } = results.data.coord;
       const { icon, description, main } = results.data.weather[0];
-      const { feels_like } = results.data.main;
-      const image = `http://openweathermap.org/img/wn/${icon}.png`;
-      const temperature = `${Math.floor(results.data.main.temp)}${'\u2103'}`;
+      const { feels_like, temp_min, temp_max } = results.data.main;
+      const temperature = `${Math.round(results.data.main.temp)}${'\u2103'}`;
       const markerDescription = `The weather in ${name} is ${description}. It feels like ${feels_like} degrees celsius`;
+      console.log(icon);
       res.render('index', {
         lat,
         lon,
-        image,
+        image: displayWeatherIcon(icon),
         MAPBOX_ACCESS_TOKEN,
         markerDescription,
         temperature,
@@ -46,7 +47,8 @@ router.post('/', async (req, res) => {
       });
     });
   } catch (error) {
-    DEFAULT_LOCATION.markerDescription = 'City not found! Please try again.';
+    DEFAULT_LOCATION.markerDescription =
+      'City not found! Please try another city.';
     return res.render('index', {
       lat: DEFAULT_LOCATION.lat,
       lon: DEFAULT_LOCATION.lon,
