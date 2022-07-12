@@ -34,7 +34,6 @@ router.post('/', async (req, res) => {
       const { feels_like, temp_min, temp_max } = results.data.main;
       const temperature = `${Math.round(results.data.main.temp)}${'\u2103'}`;
       const markerDescription = `The weather in ${name} is ${description}. It feels like ${feels_like} degrees celsius`;
-      console.log(icon);
       res.render('index', {
         lat,
         lon,
