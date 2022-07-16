@@ -16,21 +16,32 @@ block content
                 input.input.is-primary.is-large(id="search-box" type="text" name="city" data-city-search='' placeholder="Enter a city..." required="")
               .control
                 button.button.is-primary.is-large(type='submit') Search
-  section.section
-    h2.title.has-text-centered Current Weather
-    .container
-      .columns.is-centered
-        if image
-          .box.has-background-primary
-            article.media
-              figure.media-left
-                div.is-64x64
-                i(class=`fa-2xl fa-solid ${image}`)
-              .media-content
-                .content
-                  p.title.has-text-black #{cityName}
-                  p.subtitle.is-4.has-text-black #{weatherConditions}
-                  p.subtitle.has-text-black #{temperature}
+  if image              
+    section.section
+      h2.title.has-text-centered Current Weather
+      .container
+        .columns.is-centered
+
+          div.card.has-background-primary
+            header.card-header
+              div.card-header-icon
+                span.icon
+                  i(class=`fa-2xl fa-solid ${image}`)
+              p.card-header-title.is-size-2.mr-3 #{cityName}
+            div.card-content.is-size-3
+              div.block
+                p.has-text-black.has-text-centered #{weatherConditions}
+              div.block
+                p.has-text-black.has-text-centered #{temperature}
+              div.block
+                p.has-text-black.has-text-centered Min: #{minTemp}
+                p.has-text-black.has-text-centered Max: #{maxTemp}
+              div.block
+                p.has-text-black.has-text-centered Humidity: #{humidity}%
+              div.block
+                p.has-text-black.has-text-weight-semibold.has-text-centered Sunrise: #{sunriseTime}
+                p.has-text-black.has-text-weight-semibold.has-text-centered Sunset: #{sunsetTime}
+
   section.section
     h2.title.has-text-centered Your Location
     .columns.is-centered

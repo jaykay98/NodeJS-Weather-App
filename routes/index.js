@@ -31,7 +31,18 @@ router.post('/', async (req, res) => {
       const { name } = results.data;
       const { lat, lon } = results.data.coord;
       const { icon, description, main } = results.data.weather[0];
-      const { feels_like, temp_min, temp_max } = results.data.main;
+      const { feels_like, temp_min, temp_max, humidity } = results.data.main;
+      const { sunrise, sunset } = results.data.sys;
+
+      const minTemp = `${temp_min}${'\u2103'}`;
+      const maxTemp = `${temp_max}${'\u2103'}`;
+
+      const sunriseMilliseconds = sunrise * 1000;
+      const sunsetMilliseconds = sunset * 1000;
+
+      const sunsetTime = new Date(sunsetMilliseconds).toLocaleTimeString();
+      const sunriseTime = new Date(sunriseMilliseconds).toLocaleTimeString();
+
       const temperature = `${Math.round(results.data.main.temp)}${'\u2103'}`;
       const markerDescription = `The weather in ${name} is ${description}. It feels like ${feels_like} degrees celsius`;
       res.render('index', {
@@ -41,6 +52,11 @@ router.post('/', async (req, res) => {
         MAPBOX_ACCESS_TOKEN,
         markerDescription,
         temperature,
+        minTemp,
+        maxTemp,
+        humidity,
+        sunriseTime,
+        sunsetTime,
         cityName: name,
         weatherConditions: main,
       });
